@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Cabify Challenge"
 include(":app")
- 
+include(":ui")
+include(":data")
+include(":domain")
