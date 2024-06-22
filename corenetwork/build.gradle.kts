@@ -54,4 +54,6 @@ dependencies {
     implementation(libs.kotlinx.coroutine.core)
     implementation(libs.kotlinx.coroutine.android)
     implementation(libs.coroutines.adapter)
+
+    testImplementation(libs.mockk)
 }

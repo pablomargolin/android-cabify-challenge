@@ -18,10 +18,10 @@ inline fun <reified T, U> mapResponse(
             val result = successResponse.invoke(products)
             ApiResult.SUCCESS(result)
         } else {
-            ApiResult.ERROR("An error occurred while fetching products")
+            ApiResult.ERROR("Error getting response")
         }
     }
     catch (exception: Exception){
-        ApiResult.ERROR(exception.cause?.message ?: "")
+        ApiResult.ERROR(exception.message ?: "")
     }
 }
