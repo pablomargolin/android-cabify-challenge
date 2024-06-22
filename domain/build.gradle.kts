@@ -46,4 +46,7 @@ dependencies {
 
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
+
+    testImplementation(libs.mockk)
+
 }
