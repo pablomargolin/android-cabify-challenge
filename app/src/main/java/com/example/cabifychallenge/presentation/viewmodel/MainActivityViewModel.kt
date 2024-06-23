@@ -1,5 +1,7 @@
-package com.example.cabifychallenge
+package com.example.cabifychallenge.presentation.viewmodel
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.corenetwork.ApiResult
@@ -13,14 +15,18 @@ class MainActivityViewModel @Inject constructor(
     private val getProducts: GetProducts
 ): ViewModel() {
 
+    val uiState: MutableState<GetProductsState?> = mutableStateOf(null)
+
     fun getProducts(){
+        uiState.value = null
+
         viewModelScope.launch {
             when (val products = getProducts.invoke()) {
                 is ApiResult.SUCCESS -> {
-                    products.result
+                    uiState.value = GetProductsState.GetProductsSuccess(products = products.result)
                 }
                 is ApiResult.ERROR -> {
-                    products.error
+                    uiState.value = GetProductsState.GetProductsError
                 }
             }
         }
