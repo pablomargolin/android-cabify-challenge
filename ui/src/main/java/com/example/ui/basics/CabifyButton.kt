@@ -1,11 +1,13 @@
-package com.example.ui
+package com.example.ui.basics
 
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.ui.foundation.styles.ButtonStyle
 import com.example.ui.foundation.styles.CabifyStyles
 
@@ -21,6 +23,8 @@ fun CabifyButton(
         colors = ButtonDefaults.buttonColors(containerColor = style.color),
         shape = style.shape,
         modifier = modifier
+            .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
+
     ) {
         CabifyText(text = text, typography = style.typography, textColor = Color.White)
     }

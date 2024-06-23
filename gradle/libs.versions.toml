@@ -21,6 +21,7 @@ retrofit-rxjava = "2.3.0"
 kotlinx-coroutines = "1.6.0"
 coroutine-adapters = "0.9.2"
 mockk = "1.13.11"
+coil = "2.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,6 +55,7 @@ coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-corou
 
 mockk = { module = "io.mockk:mockk", name = "mockk", version.ref = "mockk"}
 
+coil = { module = "io.coil-kt:coil-compose", name = "coil", version.ref = "coil"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
