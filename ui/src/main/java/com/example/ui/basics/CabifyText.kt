@@ -4,6 +4,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import com.example.ui.foundation.text.Typography
 
 @Composable
@@ -13,7 +14,8 @@ fun CabifyText(
     typography: Typography,
     textColor: Color,
     maxLines: Int = Int.MAX_VALUE,
-    minLines: Int = 1
+    minLines: Int = 1,
+    textAlign: TextAlign? = null
 ){
     Text(
         text = text,
@@ -23,6 +25,7 @@ fun CabifyText(
         fontSize = typography.fontSize,
         textDecoration = typography.textDecoration,
         maxLines = maxLines,
-        minLines = minLines
+        minLines = minLines,
+        textAlign = textAlign
     )
 }

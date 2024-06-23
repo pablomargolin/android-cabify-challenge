@@ -68,7 +68,7 @@ fun ProductView(product: Product){
             .weight(1f)
             .fillMaxHeight())
         CabifyButton(
-            style = CabifyStyles.buttonDefaultSmall, text = "Agregar") {
+            style = CabifyStyles.buttonDefaultSmall, text = "Add") {
             
         }
    }

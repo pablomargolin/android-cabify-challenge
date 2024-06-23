@@ -14,8 +14,13 @@ class GetProductDataSourceImpl @Inject constructor(
     private val mapper: ProductsDtoToDomainMapper
 ): GetProductsDataSource {
     override suspend fun getProducts(): ApiResult<Products> {
-        val response = serviceHelper.getCabifyService().getProducts()
-        val result = mapResponse<ProductsDto, Products>(response, successResponse = { mapper.map(it) })
-        return result
+        runCatching {
+            val response = serviceHelper.getCabifyService().getProducts()
+            val result = mapResponse<ProductsDto, Products>(response, successResponse = { mapper.map(it) })
+            return result
+        }
+            .getOrElse {
+            return ApiResult.ERROR("Error getting products")
+        }
     }
 }
