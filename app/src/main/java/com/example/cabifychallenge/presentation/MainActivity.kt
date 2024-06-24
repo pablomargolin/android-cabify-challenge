@@ -33,9 +33,10 @@ import coil.compose.AsyncImage
 import com.example.cabifychallenge.presentation.viewmodel.GetProductsState
 import com.example.cabifychallenge.presentation.viewmodel.MainActivityViewModel
 import com.example.cabifychallenge.ui.theme.CabifyChallengeTheme
-import com.example.domain.model.Products
+import com.example.domain.model.Product
 import com.example.ui.basics.CabifyText
-import com.example.ui.components.ProductView
+import com.example.ui.components.ComponentListener
+import com.example.ui.components.viewmodels.ComponentViewModel
 import com.example.ui.foundation.Colors
 import com.example.ui.foundation.styles.CabifyStyles
 import com.example.ui.modal.CabifyErrorModal
@@ -44,7 +45,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), ComponentListener {
     private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +60,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun MainScreen(products: Products) {
+    private fun MainScreen() {
         Scaffold(
             topBar = {
                 TopAppBar(title = {
@@ -94,7 +95,7 @@ class MainActivity : ComponentActivity() {
                 
                 Spacer(modifier = Modifier.height(20.dp))
                 
-                ProductsScreen(products = products)
+                ProductsScreen(viewModel.componentsViewModel)
             }
         }
     }
@@ -135,7 +136,7 @@ class MainActivity : ComponentActivity() {
         viewModel.uiState.value.let { uiState ->
             when(uiState){
                 is GetProductsState.GetProductsSuccess -> {
-                    MainScreen(uiState.products)
+                    MainScreen()
                 }
                 is GetProductsState.GetProductsError -> {
                     CabifyErrorModal {
@@ -150,7 +151,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun ProductsScreen(products: Products){
+    private fun ProductsScreen(componentsViewModel: List<ComponentViewModel>){
         Column {
             CabifyText(
                 text = "For you",
@@ -162,11 +163,11 @@ class MainActivity : ComponentActivity() {
             LazyColumn(
                 Modifier.fillMaxSize()
             ) {
-                items(products.products.size){ index ->
+                items(componentsViewModel.size){ index ->
 
-                    ProductView(product = products.products[index])
+                    componentsViewModel[index].Build(componentListener = this@MainActivity)
 
-                    if (index != products.products.lastIndex) {
+                    if (index != componentsViewModel.lastIndex) {
                         HorizontalDivider(
                             modifier = Modifier
                                 .padding(vertical = 2.dp)
@@ -178,5 +179,9 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun productAdded(product: Product) {
+        viewModel.productAdded(product)
     }
 }
