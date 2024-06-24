@@ -24,7 +24,9 @@ import com.example.ui.basics.CabifyText
 import com.example.ui.foundation.styles.CabifyStyles
 
 @Composable
-fun ProductView(product: Product){
+fun ProductView(
+    product: Product,
+    componentListener: ComponentListener){
 
     Row(
         Modifier
@@ -69,7 +71,7 @@ fun ProductView(product: Product){
             .fillMaxHeight())
         CabifyButton(
             style = CabifyStyles.buttonDefaultSmall, text = "Add") {
-            
+            componentListener.productAdded(product)
         }
    }
 }
@@ -77,7 +79,9 @@ fun ProductView(product: Product){
 @Preview
 @Composable
 fun PreviewProductView(){
-    ProductView(product = Product("VOUCHER", "CabifyVoucher", 5f))
+    ProductView(product = Product("VOUCHER", "CabifyVoucher", 5f), object : ComponentListener {
+        override fun productAdded(product: Product) {}
+    })
 }
 
 val image = "https://i.imgur.com/hFw1u48.png"
