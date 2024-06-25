@@ -20,6 +20,7 @@ class CartRepositoryImp @Inject constructor(
 
     override fun addProduct(product: Product) {
         cart?.products?.add(product) ?: createCart(product)
+        calculateTotalPrice()
     }
 
     override fun getCart(): Cart? {
@@ -28,10 +29,11 @@ class CartRepositoryImp @Inject constructor(
 
     override fun removeProduct(product: Product) {
         cart?.products?.remove(product)
+        calculateTotalPrice()
         cart = cart.takeIf { it?.products?.isNotEmpty() == true }
     }
 
-    override fun totalPrice(): Float {
+    override fun calculateTotalPrice(): Float {
         cart?.let {
             it.totalPrice = applyDiscounts.applyDiscounts(it)
         }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.corenetwork.ApiResult
 import com.example.domain.CartRepository
+import com.example.domain.model.Cart
 import com.example.domain.model.Product
 import com.example.domain.model.Products
 import com.example.domain.usecase.GetProducts
@@ -20,7 +21,7 @@ class MainActivityViewModel @Inject constructor(
     private val getProducts: GetProducts,
     private val cartRepository: CartRepository
 ): ViewModel() {
-
+    val cart: MutableState<Cart?> = mutableStateOf(null)
     val uiState: MutableState<GetProductsState?> = mutableStateOf(null)
     val componentsViewModel = mutableListOf<ComponentViewModel>()
 
@@ -49,5 +50,6 @@ class MainActivityViewModel @Inject constructor(
 
     fun productAdded(product: Product) {
         cartRepository.addProduct(product)
+        cart.value = cartRepository.getCart()
     }
 }

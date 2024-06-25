@@ -16,6 +16,7 @@ object CabifyStyles {
     val textTitleBoldMedium = Typography(FontFamily(Font(R.font.segma_bold)), 16.sp,TextDecoration.None)
     val textTitleLarge = Typography(FontFamily(Font(R.font.segma_medium)), 20.sp,TextDecoration.None)
     val textTitleSmall = Typography(FontFamily(Font(R.font.segma_medium)), 12.sp,TextDecoration.None)
+    val textTitleSmallLineThrough = Typography(FontFamily(Font(R.font.segma_medium)), 12.sp,TextDecoration.LineThrough)
 
     val buttonDefault = ButtonStyle(
         Colors.GREEN.value,

@@ -20,22 +20,28 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.SecureFlagPolicy
 import coil.compose.AsyncImage
 import com.example.cabifychallenge.presentation.viewmodel.GetProductsState
 import com.example.cabifychallenge.presentation.viewmodel.MainActivityViewModel
 import com.example.cabifychallenge.ui.theme.CabifyChallengeTheme
 import com.example.domain.model.Product
+import com.example.ui.basics.CabifyButton
 import com.example.ui.basics.CabifyText
 import com.example.ui.components.ComponentListener
+import com.example.ui.components.SummaryView
 import com.example.ui.components.viewmodels.ComponentViewModel
 import com.example.ui.foundation.Colors
 import com.example.ui.foundation.styles.CabifyStyles
@@ -47,6 +53,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), ComponentListener {
     private val viewModel: MainActivityViewModel by viewModels()
+
+    private val showSummaryModal = mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,10 +99,10 @@ class MainActivity : ComponentActivity(), ComponentListener {
                 Modifier
                     .padding(padding)
                     .padding(start = 10.dp, end = 10.dp)) {
-                DiscountImage(text = "2x1 on Vouchers! Discounts on t-shirts!")
-                
-                Spacer(modifier = Modifier.height(20.dp))
-                
+                DiscountImage(
+                    text = "2x1 on Vouchers! Discounts on t-shirts!")
+                Spacer(
+                    modifier = Modifier.height(20.dp))
                 ProductsScreen(viewModel.componentsViewModel)
             }
         }
@@ -148,6 +156,17 @@ class MainActivity : ComponentActivity(), ComponentListener {
                 }
             }
         }
+
+        if (showSummaryModal.value){
+            ModalBottomSheet(
+                onDismissRequest = {
+                    showSummaryModal.value = false
+                },
+                properties = ModalBottomSheetProperties(SecureFlagPolicy.SecureOff, isFocusable = true, shouldDismissOnBackPress = true)
+            ) {
+                SummaryView(cart = viewModel.cart)
+            }
+        }
     }
 
     @Composable
@@ -159,23 +178,32 @@ class MainActivity : ComponentActivity(), ComponentListener {
                 textColor = Color.Black)
 
             Spacer(modifier = Modifier.height(10.dp))
+            
+            Column(Modifier.fillMaxSize()) {
+                LazyColumn(Modifier.weight(1f)) {
+                    items(componentsViewModel.size){ index ->
 
-            LazyColumn(
-                Modifier.fillMaxSize()
-            ) {
-                items(componentsViewModel.size){ index ->
+                        componentsViewModel[index].Build(componentListener = this@MainActivity)
 
-                    componentsViewModel[index].Build(componentListener = this@MainActivity)
-
-                    if (index != componentsViewModel.lastIndex) {
-                        HorizontalDivider(
-                            modifier = Modifier
-                                .padding(vertical = 2.dp)
-                                .height(1.dp),
-                            color = Colors.GREY.value,
-                            thickness = 1.dp
-                        )
+                        if (index != componentsViewModel.lastIndex) {
+                            HorizontalDivider(
+                                modifier = Modifier
+                                    .padding(vertical = 2.dp)
+                                    .height(1.dp),
+                                color = Colors.GREY.value,
+                                thickness = 1.dp
+                            )
+                        }
                     }
+                }
+
+                CabifyButton(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    style = CabifyStyles.buttonDefaultSmall,
+                    text = "Pay",
+                    enabled = viewModel.cart.value != null) {
+                        showSummaryModal.value = true
                 }
             }
         }

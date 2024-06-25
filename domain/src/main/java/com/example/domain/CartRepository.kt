@@ -7,5 +7,5 @@ interface CartRepository {
     fun addProduct(product: Product)
     fun getCart(): Cart?
     fun removeProduct(product: Product)
-    fun totalPrice(): Float
+    fun calculateTotalPrice(): Float
 }

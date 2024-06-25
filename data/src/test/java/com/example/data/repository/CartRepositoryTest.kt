@@ -57,7 +57,7 @@ class CartRepositoryTest {
         cartRepository.addProduct(voucher)
         cartRepository.addProduct(voucher)
 
-        assertEquals(5f, cartRepository.totalPrice())
+        assertEquals(5f, cartRepository.calculateTotalPrice())
     }
 
     @Test
@@ -66,7 +66,7 @@ class CartRepositoryTest {
         cartRepository.addProduct(tshirt)
         cartRepository.addProduct(tshirt)
 
-        assertEquals(57f, cartRepository.totalPrice())
+        assertEquals(57f, cartRepository.calculateTotalPrice())
     }
 
     @Test
@@ -74,11 +74,11 @@ class CartRepositoryTest {
         cartRepository.addProduct(mug)
         cartRepository.addProduct(mug)
 
-        assertEquals(15f, cartRepository.totalPrice())
+        assertEquals(15f, cartRepository.calculateTotalPrice())
     }
 
     @Test
     fun `get total price without products should return 0f`(){
-        assertEquals(0f, cartRepository.totalPrice())
+        assertEquals(0f, cartRepository.calculateTotalPrice())
     }
 }

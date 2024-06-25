@@ -14,13 +14,14 @@ import com.example.ui.foundation.styles.CabifyStyles
 @Composable
 fun CabifyButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     style: ButtonStyle,
     text: String,
     onClick: () -> Unit
 ){
     Button(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = style.color),
+        colors = ButtonDefaults.buttonColors(containerColor = if (enabled) style.color else Color.LightGray),
         shape = style.shape,
         modifier = modifier
             .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
