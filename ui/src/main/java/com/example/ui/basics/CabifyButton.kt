@@ -20,6 +20,7 @@ fun CabifyButton(
     onClick: () -> Unit
 ){
     Button(
+        enabled = enabled,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = if (enabled) style.color else Color.LightGray),
         shape = style.shape,

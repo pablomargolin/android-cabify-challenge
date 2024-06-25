@@ -200,7 +200,7 @@ class MainActivity : ComponentActivity(), ComponentListener {
                 CabifyButton(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    style = CabifyStyles.buttonDefaultSmall,
+                    style = CabifyStyles.buttonDefault,
                     text = "Pay",
                     enabled = viewModel.cart.value != null) {
                         showSummaryModal.value = true
@@ -211,5 +211,9 @@ class MainActivity : ComponentActivity(), ComponentListener {
 
     override fun productAdded(product: Product) {
         viewModel.productAdded(product)
+    }
+
+    override fun productRemoved(product: Product) {
+        viewModel.productRemoved(product)
     }
 }

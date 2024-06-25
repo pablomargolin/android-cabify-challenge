@@ -1,5 +1,6 @@
 package com.example.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,8 +29,12 @@ import com.example.ui.foundation.styles.CabifyStyles
 @Composable
 fun ProductView(
     product: Product,
-    componentListener: ComponentListener){
+    componentListener: ComponentListener
+){
 
+    val countProducts = remember {
+        mutableIntStateOf(0)
+    }
     Row(
         Modifier
             .fillMaxWidth()
@@ -69,9 +76,27 @@ fun ProductView(
         Spacer(modifier = Modifier
             .weight(1f)
             .fillMaxHeight())
-        CabifyButton(
-            style = CabifyStyles.buttonDefaultSmall, text = "Add") {
-            componentListener.productAdded(product)
+
+        Column {
+            CabifyButton(
+                style = CabifyStyles.buttonDefaultSmall, text = "Add") {
+                componentListener.productAdded(product)
+                countProducts.intValue += 1
+            }
+            AnimatedVisibility(visible = countProducts.intValue > 0) {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    CabifyText(text = countProducts.intValue.toString(), typography = CabifyStyles.textTitleMedium, textColor = Color.Black)
+                    Spacer(modifier = Modifier.width(5.dp))
+                    CabifyButton(
+                        style = CabifyStyles.buttonDefaultSmallRed, text = "X") {
+                        componentListener.productRemoved(product)
+                        countProducts.intValue -= 1
+                    }
+                }
+            }
+
         }
    }
 }
@@ -81,6 +106,7 @@ fun ProductView(
 fun PreviewProductView(){
     ProductView(product = Product("VOUCHER", "CabifyVoucher", 5f), object : ComponentListener {
         override fun productAdded(product: Product) {}
+        override fun productRemoved(product: Product) {}
     })
 }
 

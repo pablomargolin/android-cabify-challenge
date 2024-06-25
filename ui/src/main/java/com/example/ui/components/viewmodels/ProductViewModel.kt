@@ -8,7 +8,9 @@ import com.example.ui.components.ProductView
 class ProductViewModel(val product: Product): ComponentViewModel {
     @Composable
     override fun Build(componentListener: ComponentListener) {
-        ProductView(product = product, componentListener)
+        ProductView(
+            product = product,
+            componentListener)
     }
 
 }

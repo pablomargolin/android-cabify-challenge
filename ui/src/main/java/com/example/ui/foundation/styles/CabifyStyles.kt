@@ -30,6 +30,12 @@ object CabifyStyles {
         textTitleSmall
     )
 
+    val buttonDefaultSmallRed = ButtonStyle(
+        Colors.RED.value,
+        RoundedCornerShape(8.dp),
+        textTitleSmall
+    )
+
     val cardDefault = CardStyle(
         4.dp,
         1.dp,

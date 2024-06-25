@@ -52,4 +52,9 @@ class MainActivityViewModel @Inject constructor(
         cartRepository.addProduct(product)
         cart.value = cartRepository.getCart()
     }
+
+    fun productRemoved(product: Product) {
+        cartRepository.removeProduct(product)
+        cart.value = cartRepository.getCart()
+    }
 }
