@@ -27,7 +27,8 @@ import com.example.ui.foundation.styles.CabifyStyles
 
 @Composable
 fun SummaryView(
-    cart: MutableState<Cart?>
+    cart: MutableState<Cart?>,
+    onPay: (() -> Unit)
 ) {
 
     cart.value?.let { cart ->
@@ -117,7 +118,7 @@ fun SummaryView(
                 Modifier.fillMaxWidth(),
                 style = CabifyStyles.buttonDefaultSmall,
                 text = "Pay $${if(showDiscount) cart.totalPrice else priceWithoutDiscount}") {
-
+                onPay()
             }
         }
 
@@ -131,6 +132,6 @@ fun PreviewSummaryView(){
     SummaryView(
         remember {
             mutableStateOf( Cart(mutableListOf(Product("VOUCHER", "voucher", 1000f)), 990f))
-        }
+        }, {}
     )
 }

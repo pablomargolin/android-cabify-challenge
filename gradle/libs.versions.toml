@@ -23,6 +23,8 @@ coroutine-adapters = "0.9.2"
 mockk = "1.13.11"
 coil = "2.6.0"
 coroutine-test = "1.8.0"
+lottie = "6.4.1"
+activity = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,12 +55,12 @@ retrofit-rxjava = { module = "com.squareup.retrofit2:adapter-rxjava2", name = "r
 kotlinx-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", name = "kotlinx-coroutine-core", version.ref = "kotlinx-coroutines"}
 kotlinx-coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", name = "kotlinx-coroutine-android", version.ref = "kotlinx-coroutines"}
 coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", name = "coroutines-adapter", version.ref = "coroutine-adapters"}
-
 mockk = { module = "io.mockk:mockk", name = "mockk", version.ref = "mockk"}
-
 coil = { module = "io.coil-kt:coil-compose", name = "coil", version.ref = "coil"}
-
 coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", name = "coroutine-test", version.ref = "coroutine-test"}
+lottie = { module = "com.airbnb.android:lottie-compose", name = "lottie", version.ref = "lottie"}
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

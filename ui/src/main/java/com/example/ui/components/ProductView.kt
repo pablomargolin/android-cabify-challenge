@@ -107,6 +107,7 @@ fun PreviewProductView(){
     ProductView(product = Product("VOUCHER", "CabifyVoucher", 5f), object : ComponentListener {
         override fun productAdded(product: Product) {}
         override fun productRemoved(product: Product) {}
+        override fun payCart() {}
     })
 }
 

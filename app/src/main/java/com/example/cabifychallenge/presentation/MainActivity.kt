@@ -1,10 +1,13 @@
 package com.example.cabifychallenge.presentation
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +37,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.SecureFlagPolicy
 import coil.compose.AsyncImage
+import com.example.cabifychallenge.R
+import com.example.cabifychallenge.presentation.complete.PaymentActivity
 import com.example.cabifychallenge.presentation.viewmodel.GetProductsState
 import com.example.cabifychallenge.presentation.viewmodel.MainActivityViewModel
 import com.example.cabifychallenge.ui.theme.CabifyChallengeTheme
@@ -58,6 +63,7 @@ class MainActivity : ComponentActivity(), ComponentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.slide_in_right, R.anim.slide_out_left)
         enableEdgeToEdge()
         setContent {
             CabifyChallengeTheme {
@@ -164,7 +170,9 @@ class MainActivity : ComponentActivity(), ComponentListener {
                 },
                 properties = ModalBottomSheetProperties(SecureFlagPolicy.SecureOff, isFocusable = true, shouldDismissOnBackPress = true)
             ) {
-                SummaryView(cart = viewModel.cart)
+                SummaryView(cart = viewModel.cart) {
+                    payCart()
+                }
             }
         }
     }
@@ -215,5 +223,9 @@ class MainActivity : ComponentActivity(), ComponentListener {
 
     override fun productRemoved(product: Product) {
         viewModel.productRemoved(product)
+    }
+
+    override fun payCart() {
+        startActivity(Intent(this@MainActivity, PaymentActivity::class.java))
     }
 }
