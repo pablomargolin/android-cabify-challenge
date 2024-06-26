@@ -1,9 +1,9 @@
 package com.example.data.di
 
-import com.example.data.datasource.GetProductDataSourceImpl
-import com.example.data.repository.CartRepositoryImp
+import com.example.data.datasource.ProductRemoteDataSource
+import com.example.data.repository.CartRepositoryImpl
 import com.example.domain.CartRepository
-import com.example.domain.datasource.GetProductsDataSource
+import com.example.domain.datasource.ProductsDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,9 +14,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class BindsModule {
     @Binds
-    abstract fun provideGetProductDataSource(getProductsDataSource: GetProductDataSourceImpl): GetProductsDataSource
+    abstract fun provideGetProductDataSource(getProductsDataSource: ProductRemoteDataSource): ProductsDataSource
 
     @Binds
     @Singleton
-    abstract fun provideCartRepository(cartRepositoryImp: CartRepositoryImp): CartRepository
+    abstract fun provideCartRepository(cartRepositoryImpl: CartRepositoryImpl): CartRepository
 }

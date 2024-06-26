@@ -1,11 +1,10 @@
-package com.example.cabifychallenge.presentation.complete
+package com.example.ui.presentation.complete
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,9 +13,8 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.example.cabifychallenge.R
-import com.example.cabifychallenge.presentation.MainActivity
-import com.example.cabifychallenge.ui.theme.CabifyChallengeTheme
+import com.example.ui.R
+import com.example.ui.presentation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,9 +23,7 @@ class PaymentActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CabifyChallengeTheme {
-                ShowPaymentAnimation()
-            }
+            ShowPaymentAnimation()
         }
     }
 

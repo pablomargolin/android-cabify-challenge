@@ -1,13 +1,11 @@
-package com.example.cabifychallenge.presentation
+package com.example.ui.presentation
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,17 +35,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.SecureFlagPolicy
 import coil.compose.AsyncImage
-import com.example.cabifychallenge.R
-import com.example.cabifychallenge.presentation.complete.PaymentActivity
-import com.example.cabifychallenge.presentation.viewmodel.GetProductsState
-import com.example.cabifychallenge.presentation.viewmodel.MainActivityViewModel
-import com.example.cabifychallenge.ui.theme.CabifyChallengeTheme
+import com.example.ui.presentation.complete.PaymentActivity
+import com.example.ui.presentation.viewmodel.GetProductsState
+import com.example.ui.presentation.viewmodel.MainActivityViewModel
 import com.example.domain.model.Product
 import com.example.ui.basics.CabifyButton
 import com.example.ui.basics.CabifyText
 import com.example.ui.components.ComponentListener
 import com.example.ui.components.SummaryView
-import com.example.ui.components.viewmodels.ComponentViewModel
+import com.example.ui.components.viewmodels.ComponentFactory
 import com.example.ui.foundation.Colors
 import com.example.ui.foundation.styles.CabifyStyles
 import com.example.ui.modal.CabifyErrorModal
@@ -63,13 +59,10 @@ class MainActivity : ComponentActivity(), ComponentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.slide_in_right, R.anim.slide_out_left)
         enableEdgeToEdge()
         setContent {
-            CabifyChallengeTheme {
-                SetUiStateObserver()
-                viewModel.getProducts()
-            }
+            SetUiStateObserver()
+            viewModel.getProducts()
         }
     }
 
@@ -109,7 +102,7 @@ class MainActivity : ComponentActivity(), ComponentListener {
                     text = "2x1 on Vouchers! Discounts on t-shirts!")
                 Spacer(
                     modifier = Modifier.height(20.dp))
-                ProductsScreen(viewModel.componentsViewModel)
+                ProductsScreen(viewModel.componentsFactory)
             }
         }
     }
@@ -178,7 +171,7 @@ class MainActivity : ComponentActivity(), ComponentListener {
     }
 
     @Composable
-    private fun ProductsScreen(componentsViewModel: List<ComponentViewModel>){
+    private fun ProductsScreen(componentsFactory: List<ComponentFactory>){
         Column {
             CabifyText(
                 text = "For you",
@@ -189,11 +182,11 @@ class MainActivity : ComponentActivity(), ComponentListener {
             
             Column(Modifier.fillMaxSize()) {
                 LazyColumn(Modifier.weight(1f)) {
-                    items(componentsViewModel.size){ index ->
+                    items(componentsFactory.size){ index ->
 
-                        componentsViewModel[index].Build(componentListener = this@MainActivity)
+                        componentsFactory[index].Create(componentListener = this@MainActivity)
 
-                        if (index != componentsViewModel.lastIndex) {
+                        if (index != componentsFactory.lastIndex) {
                             HorizontalDivider(
                                 modifier = Modifier
                                     .padding(vertical = 2.dp)

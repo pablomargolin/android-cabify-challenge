@@ -8,7 +8,7 @@ import org.junit.Test
 
 class CartRepositoryTest {
     private val applyDiscounts: ApplyDiscounts = ApplyDiscounts()
-    private val cartRepository = CartRepositoryImp(applyDiscounts)
+    private val cartRepository = CartRepositoryImpl(applyDiscounts)
 
     val product = Product("code", "name", 1f)
     val product2 = Product("code", "name", 1f)

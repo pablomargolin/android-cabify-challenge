@@ -1,6 +1,5 @@
 package com.example.corenetwork
 
-import com.example.corenetwork.service.CabifyChallengeService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import io.mockk.every
@@ -49,9 +48,7 @@ class ServiceBuilderTest {
             .client(client)
             .build()
 
-        val service = retrofit.create(CabifyChallengeService::class.java)
         assertNotNull(retrofit)
-        assertNotNull(service)
     }
 
     companion object {

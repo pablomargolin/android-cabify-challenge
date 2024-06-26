@@ -1,6 +1,10 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -41,6 +45,8 @@ android {
 dependencies {
 
     implementation(project(":domain"))
+    implementation(project(":corenetwork"))
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -58,6 +64,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutine.test)
 
     implementation(libs.coil)
+    implementation(libs.lottie)
 }

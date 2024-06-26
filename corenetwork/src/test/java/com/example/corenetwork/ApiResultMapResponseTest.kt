@@ -12,58 +12,44 @@ import retrofit2.Response
 class ApiResultMapResponseTest {
     @Test
     fun `map response when is success should return ApiResult success`() {
+        val response = mockk<Response<ProductsDto>>()
 
-        val responseBody = mockk<ResponseBody>()
-        val response = mockk<Response<ResponseBody>>()
-        val json = """
-        {
-          "products": [
-            {
-              "code": "voucher",
-              "name": "voucher",
-              "price": 5
-            }
-          ]
-        }
-        """
         val expectedResult = ProductsDto(listOf(ProductDto("voucher", "voucher", 5f)))
 
         every { response.isSuccessful } returns true
-        every { response.body() } returns responseBody
-        every { responseBody.string() } returns json
+        every { response.body() } returns expectedResult
 
         val result = mapResponse<ProductsDto, ProductsDto>(response) { it }
 
-        assertTrue(result is ApiResult.SUCCESS)
-        assertEquals(expectedResult, (result as ApiResult.SUCCESS).result)
+        assertTrue(result is ApiResult.Success)
+        assertEquals(expectedResult, (result as ApiResult.Success).result)
     }
 
     @Test
     fun `map response when is error should return ApiResult error`() {
-        val response = mockk<Response<ResponseBody>>()
+        val response = mockk<Response<ProductsDto>>()
 
         every { response.isSuccessful } returns false
         every { response.body() } returns null
 
-        val result = mapResponse<List<ProductDto>, List<ProductDto>>(response) { it }
+        val result = mapResponse<ProductsDto, ProductsDto>(response) { it }
 
-        assertTrue(result is ApiResult.ERROR)
-        assertEquals("Error getting response", (result as ApiResult.ERROR).error)
+        assertTrue(result is ApiResult.Error)
+        assertEquals("Error getting response", (result as ApiResult.Error).error)
     }
 
     @Test
     fun `map response when is exception should return ApiResult error`() {
-        val responseBody = mockk<ResponseBody>()
-        val response = mockk<Response<ResponseBody>>()
+        val responseBody = mockk<ProductsDto>()
+        val response = mockk<Response<ProductsDto>>()
 
         every { response.isSuccessful } returns true
-        every { response.body() } returns responseBody
-        every { responseBody.string() } throws Exception("exception")
+        every { response.body() } throws Exception("exception")
 
-        val result = mapResponse<List<ProductDto>, List<ProductDto>>(response) { it }
+        val result = mapResponse<ProductsDto, ProductsDto>(response) { it }
 
-        assertTrue(result is ApiResult.ERROR)
-        assertEquals("exception", (result as ApiResult.ERROR).error)
+        assertTrue(result is ApiResult.Error)
+        assertEquals("exception", (result as ApiResult.Error).error)
     }
 }
 

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,88 +41,98 @@ fun SummaryView(
                 .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                Modifier.fillMaxWidth()
-            ) {
-                CabifyText(
-                    text = "Subtotal",
-                    typography = CabifyStyles.textTitleSmall,
-                    textColor = Color.Black)
-                Spacer(modifier = Modifier.weight(1f))
-                CabifyText(
-                    text = "$${priceWithoutDiscount}",
-                    typography = CabifyStyles.textTitleSmall,
-                    textColor = Color.Black)
-            }
-
+            SubtotalRow(priceWithoutDiscount)
             Spacer(modifier = Modifier.height(5.dp))
-
-            Row(
-                Modifier.fillMaxWidth()
-            ) {
-                CabifyText(
-                    text = "Delivery",
-                    typography = CabifyStyles.textTitleSmall,
-                    textColor = Color.Black)
-                Spacer(modifier = Modifier.weight(1f))
-                CabifyText(
-                    text = "$0.0",
-                    typography = CabifyStyles.textTitleSmall,
-                    textColor = Color.Black)
-                Spacer(modifier = Modifier.width(2.dp))
-                CabifyText(
-                    text = "$5.0",
-                    typography = CabifyStyles.textTitleSmallLineThrough,
-                    textColor = Color.Black)
-            }
-
-
+            DeliveryRow()
             if (showDiscount){
                 Spacer(modifier = Modifier.height(5.dp))
-
-                Row(
-                    Modifier.fillMaxWidth()
-                ) {
-                    CabifyText(
-                        text = "Discount",
-                        typography = CabifyStyles.textTitleSmall,
-                        textColor = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    CabifyText(
-                        text = "$${priceWithoutDiscount - cart.totalPrice}",
-                        typography = CabifyStyles.textTitleSmall,
-                        textColor = Color.Black)
-                }
+                DiscountRow(priceWithoutDiscount, cart.totalPrice)
             }
-
             Spacer(modifier = Modifier.height(5.dp))
-
-            Row(
-                Modifier.fillMaxWidth()
-            ) {
-                CabifyText(
-                    text = "Total",
-                    typography = CabifyStyles.textTitleSmall,
-                    textColor = Color.Black)
-                Spacer(modifier = Modifier.weight(1f))
-                CabifyText(
-                    text = "$${if (showDiscount) cart.totalPrice else priceWithoutDiscount}",
-                    typography = CabifyStyles.textTitleSmall,
-                    textColor = if(showDiscount) Colors.ORANGE.value else Color.Black)
-            }
-
+            TotalRow(
+                showDiscount,
+                cart.totalPrice,
+                priceWithoutDiscount
+            )
             Spacer(modifier = Modifier.height(5.dp))
-
             CabifyButton(
                 Modifier.fillMaxWidth(),
                 style = CabifyStyles.buttonDefaultSmall,
-                text = "Pay $${if(showDiscount) cart.totalPrice else priceWithoutDiscount}") {
+                text = "Pay €${if(showDiscount) cart.totalPrice else priceWithoutDiscount}") {
                 onPay()
             }
         }
-
     }
+}
 
+@Composable
+private fun SubtotalRow(priceWithoutDiscount: Float) {
+    Row(
+        Modifier.fillMaxWidth()
+    ) {
+        CabifyText(
+            text = "Subtotal",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = Color.Black)
+        Spacer(modifier = Modifier.weight(1f))
+        CabifyText(
+            text = "€${priceWithoutDiscount}",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = Color.Black)
+    }
+}
+@Composable
+private fun DeliveryRow(){
+    Row(
+        Modifier.fillMaxWidth()
+    ) {
+        CabifyText(
+            text = "Delivery",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = Color.Black)
+        Spacer(modifier = Modifier.weight(1f))
+        CabifyText(
+            text = "€0.0",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = Color.Black)
+        Spacer(modifier = Modifier.width(2.dp))
+        CabifyText(
+            text = "€5.0",
+            typography = CabifyStyles.textTitleSmallLineThrough,
+            textColor = Color.Black)
+    }
+}
+@Composable
+private fun DiscountRow(priceWithoutDiscount: Float, totalPrice: Float) {
+    Row(
+        Modifier.fillMaxWidth()
+    ) {
+        CabifyText(
+            text = "Discount",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = Color.Black)
+        Spacer(modifier = Modifier.weight(1f))
+        CabifyText(
+            text = "€${priceWithoutDiscount - totalPrice}",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = Color.Black)
+    }
+}
+@Composable
+private fun TotalRow(showDiscount: Boolean, totalPrice: Float, priceWithoutDiscount: Float) {
+    Row(
+        Modifier.fillMaxWidth()
+    ) {
+        CabifyText(
+            text = "Total",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = Color.Black)
+        Spacer(modifier = Modifier.weight(1f))
+        CabifyText(
+            text = "€${if (showDiscount) totalPrice else priceWithoutDiscount}",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = if(showDiscount) Colors.ORANGE.value else Color.Black)
+    }
 }
 
 @Preview
@@ -132,6 +141,6 @@ fun PreviewSummaryView(){
     SummaryView(
         remember {
             mutableStateOf( Cart(mutableListOf(Product("VOUCHER", "voucher", 1000f)), 990f))
-        }, {}
-    )
+        }
+    ) {}
 }

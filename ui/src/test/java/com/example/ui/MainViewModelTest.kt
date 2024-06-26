@@ -1,7 +1,7 @@
-package com.example.app
+package com.example.ui
 
-import com.example.cabifychallenge.presentation.viewmodel.GetProductsState
-import com.example.cabifychallenge.presentation.viewmodel.MainActivityViewModel
+import com.example.ui.presentation.viewmodel.GetProductsState
+import com.example.ui.presentation.viewmodel.MainActivityViewModel
 import com.example.corenetwork.ApiResult
 import com.example.domain.CartRepository
 import com.example.domain.model.Product
@@ -18,7 +18,6 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 
@@ -35,18 +34,18 @@ class MainViewModelTest {
 
     @Test
     fun `get products success should put ui state with data`() {
-        coEvery { getProducts.invoke()} returns  ApiResult.SUCCESS(Products(emptyList()))
+        coEvery { getProducts.invoke()} returns  ApiResult.Success(Products(emptyList()))
 
         viewModel.getProducts()
 
         coVerify { getProducts.invoke() }
         assert(viewModel.uiState.value is GetProductsState.GetProductsSuccess)
-        assertEquals(0, viewModel.componentsViewModel.size)
+        assertEquals(0, viewModel.componentsFactory.size)
     }
 
     @Test
     fun `get products error should put ui state on error`(){
-        coEvery { getProducts.invoke() } returns ApiResult.ERROR("Error")
+        coEvery { getProducts.invoke() } returns ApiResult.Error("Error")
 
         viewModel.getProducts()
 

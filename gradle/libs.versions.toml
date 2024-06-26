@@ -17,7 +17,6 @@ gson = "2.9.0"
 hilt = "2.48"
 kapt = "1.8.0"
 http = "4.9.3"
-retrofit-rxjava = "2.3.0"
 kotlinx-coroutines = "1.6.0"
 coroutine-adapters = "0.9.2"
 mockk = "1.13.11"
@@ -51,7 +50,6 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", name = "retrofit", vers
 gson-converter = { module = "com.squareup.retrofit2:converter-gson", name = "gson", version.ref = "gson-converter"}
 gson = { module = "com.google.code.gson:gson", name = "gson", version.ref = "gson"}
 http-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", name = "http-interceptor", version.ref = "http"}
-retrofit-rxjava = { module = "com.squareup.retrofit2:adapter-rxjava2", name = "retrofit-rxjava", version.ref = "retrofit-rxjava"}
 kotlinx-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", name = "kotlinx-coroutine-core", version.ref = "kotlinx-coroutines"}
 kotlinx-coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", name = "kotlinx-coroutine-android", version.ref = "kotlinx-coroutines"}
 coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", name = "coroutines-adapter", version.ref = "coroutine-adapters"}

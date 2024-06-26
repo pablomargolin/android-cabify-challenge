@@ -20,7 +20,7 @@ class ApplyDiscountsTest {
             vouchers,
             10f
         )
-        val total = applyDiscounts.applyDiscounts(cartVouchers)
+        val total = applyDiscounts.invoke(cartVouchers)
 
         assertEquals(5.0f, total)
     }
@@ -37,7 +37,7 @@ class ApplyDiscountsTest {
             tshirts,
             60f
         )
-        val total = applyDiscounts.applyDiscounts(cartTshirts)
+        val total = applyDiscounts.invoke(cartTshirts)
 
         assertEquals(57f, total)
     }
@@ -54,7 +54,7 @@ class ApplyDiscountsTest {
             60f
         )
 
-        val total = applyDiscounts.applyDiscounts(cartTshirts)
+        val total = applyDiscounts.invoke(cartTshirts)
 
         assertEquals(40f, total)
     }
@@ -74,7 +74,7 @@ class ApplyDiscountsTest {
             77.5f
         )
 
-        val total = applyDiscounts.applyDiscounts(cart)
+        val total = applyDiscounts.invoke(cart)
 
         assertEquals(69.5f, total)
     }
@@ -90,7 +90,7 @@ class ApplyDiscountsTest {
             15f
         )
 
-        val total = applyDiscounts.applyDiscounts(cart)
+        val total = applyDiscounts.invoke(cart)
 
         assertEquals(15f, total)
     }

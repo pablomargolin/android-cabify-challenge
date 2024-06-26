@@ -6,7 +6,7 @@ import com.example.domain.model.Product
 import com.example.domain.usecase.ApplyDiscounts
 import javax.inject.Inject
 
-class CartRepositoryImp @Inject constructor(
+class CartRepositoryImpl @Inject constructor(
     private val applyDiscounts: ApplyDiscounts
 ): CartRepository {
     private var cart: Cart? = null
@@ -34,8 +34,10 @@ class CartRepositoryImp @Inject constructor(
     }
 
     override fun calculateTotalPrice(): Float {
-        cart?.let {
-            it.totalPrice = applyDiscounts.applyDiscounts(it)
+        cart?.let { currentCart ->
+            cart = currentCart.copy(
+                totalPrice = applyDiscounts(currentCart)
+            )
         }
         return cart?.totalPrice ?: 0f
     }

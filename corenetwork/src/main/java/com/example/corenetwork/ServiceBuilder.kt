@@ -1,6 +1,5 @@
 package com.example.corenetwork
 
-import com.example.corenetwork.service.CabifyChallengeService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -12,7 +11,7 @@ import javax.inject.Inject
 class ServiceBuilder @Inject constructor(
     private val gsonBuilder: GsonBuilder
 ) {
-    fun createRetrofitService(): CabifyChallengeService {
+    fun createRetrofitService(): Retrofit {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
 
@@ -24,13 +23,11 @@ class ServiceBuilder @Inject constructor(
         val builder = gsonBuilder
             .create()
 
-        val retrofit = Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(builder))
             .client(client)
             .build()
-
-        return retrofit.create(CabifyChallengeService::class.java)
     }
 
     companion object {

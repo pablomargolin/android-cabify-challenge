@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -31,10 +32,6 @@ fun ProductView(
     product: Product,
     componentListener: ComponentListener
 ){
-
-    val countProducts = remember {
-        mutableIntStateOf(0)
-    }
     Row(
         Modifier
             .fillMaxWidth()
@@ -43,62 +40,86 @@ fun ProductView(
         verticalAlignment = Alignment.CenterVertically
 
     ) {
-        AsyncImage(
-            modifier = Modifier
-                .height(100.dp)
-                .testTag("productImage"),
-            model = image,
-            contentDescription = null,
-            contentScale = ContentScale.Fit)
-
+        ProductImage()
         Spacer(modifier = Modifier.width(10.dp))
-
-        Column {
-            CabifyText(
-                modifier = Modifier.testTag("productName"),
-                text = product.name ?: "",
-                typography = CabifyStyles.textTitleMedium,
-                textColor = Color.Black)
-
-            CabifyText(
-                modifier = Modifier.testTag("productDescription"),
-                text = "Product description",
-                typography = CabifyStyles.textTitleSmall,
-                textColor = Color.Gray)
-
-            CabifyText(
-                modifier = Modifier.testTag("productPrice"),
-                text = "$ ${product.price}",
-                typography = CabifyStyles.textTitleBoldMedium,
-                textColor = Color.Black)
-        }
-
+        ProductContent(product = product)
         Spacer(modifier = Modifier
             .weight(1f)
             .fillMaxHeight())
+        ProductActions(
+            product,
+            componentListener
+        )
+   }
+}
 
-        Column {
-            CabifyButton(
-                style = CabifyStyles.buttonDefaultSmall, text = "Add") {
-                componentListener.productAdded(product)
-                countProducts.intValue += 1
-            }
-            AnimatedVisibility(visible = countProducts.intValue > 0) {
-                Row (
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    CabifyText(text = countProducts.intValue.toString(), typography = CabifyStyles.textTitleMedium, textColor = Color.Black)
-                    Spacer(modifier = Modifier.width(5.dp))
-                    CabifyButton(
-                        style = CabifyStyles.buttonDefaultSmallRed, text = "X") {
-                        componentListener.productRemoved(product)
-                        countProducts.intValue -= 1
-                    }
+@Composable
+private fun ProductImage(){
+    AsyncImage(
+        modifier = Modifier
+            .height(100.dp)
+            .testTag("productImage"),
+        model = image,
+        contentDescription = null,
+        contentScale = ContentScale.Fit)
+}
+
+@Composable
+private fun ProductContent(
+    product: Product
+){
+    Column {
+        CabifyText(
+            modifier = Modifier.testTag("productName"),
+            text = product.name ?: "",
+            typography = CabifyStyles.textTitleMedium,
+            textColor = Color.Black)
+
+        Spacer(modifier = Modifier.size(5.dp))
+        CabifyText(
+            modifier = Modifier.testTag("productDescription"),
+            text = "Product description",
+            typography = CabifyStyles.textTitleSmall,
+            textColor = Color.Gray)
+        Spacer(modifier = Modifier.size(5.dp))
+        CabifyText(
+            modifier = Modifier.testTag("productPrice"),
+            text = "€ ${product.price}",
+            typography = CabifyStyles.textTitleBoldMedium,
+            textColor = Color.Black)
+    }
+}
+
+@Composable
+private fun ProductActions(
+    product: Product,
+    componentListener: ComponentListener
+){
+    val countProducts = remember {
+        mutableIntStateOf(0)
+    }
+
+    Column {
+        CabifyButton(
+            style = CabifyStyles.buttonDefaultSmall, text = "Add") {
+            componentListener.productAdded(product)
+            countProducts.intValue += 1
+        }
+        AnimatedVisibility(visible = countProducts.intValue > 0) {
+            Row (
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                CabifyText(text = countProducts.intValue.toString(), typography = CabifyStyles.textTitleMedium, textColor = Color.Black)
+                Spacer(modifier = Modifier.width(5.dp))
+                CabifyButton(
+                    style = CabifyStyles.buttonDefaultSmallRed, text = "X") {
+                    componentListener.productRemoved(product)
+                    countProducts.intValue -= 1
                 }
             }
-
         }
-   }
+
+    }
 }
 
 @Preview

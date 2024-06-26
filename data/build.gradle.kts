@@ -51,7 +51,6 @@ dependencies {
     implementation(libs.gson.converter)
     implementation(libs.gson)
     implementation(libs.http.interceptor)
-    implementation(libs.retrofit.rxjava)
     implementation(libs.kotlinx.coroutine.core)
     implementation(libs.kotlinx.coroutine.android)
     implementation(libs.coroutines.adapter)

@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class ApplyDiscounts @Inject constructor() {
 
-    fun applyDiscounts(cart: Cart): Float {
+    operator fun invoke(cart: Cart): Float {
         val productCount = cart.products.groupingBy { it.code }.eachCount()
         var total = 0f
         productCount.forEach { (code, count) ->

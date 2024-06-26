@@ -1,4 +1,4 @@
-package com.example.cabifychallenge.presentation.viewmodel
+package com.example.ui.presentation.viewmodel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -10,8 +10,8 @@ import com.example.domain.model.Cart
 import com.example.domain.model.Product
 import com.example.domain.model.Products
 import com.example.domain.usecase.GetProducts
-import com.example.ui.components.viewmodels.ComponentViewModel
-import com.example.ui.components.viewmodels.ProductViewModel
+import com.example.ui.components.viewmodels.ComponentFactory
+import com.example.ui.components.viewmodels.ProductFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,26 +23,26 @@ class MainActivityViewModel @Inject constructor(
 ): ViewModel() {
     val cart: MutableState<Cart?> = mutableStateOf(null)
     val uiState: MutableState<GetProductsState?> = mutableStateOf(null)
-    val componentsViewModel = mutableListOf<ComponentViewModel>()
+    val componentsFactory = mutableListOf<ComponentFactory>()
 
     fun getProducts(){
         uiState.value = null
 
         viewModelScope.launch {
             when (val products = getProducts.invoke()) {
-                is ApiResult.SUCCESS -> {
-                    setProductsComponentsViewModel(products.result)
+                is ApiResult.Success -> {
+                    setProductsComponentsFactory(products.result)
                 }
-                is ApiResult.ERROR -> {
+                is ApiResult.Error -> {
                     uiState.value = GetProductsState.GetProductsError
                 }
             }
         }
     }
 
-    private fun setProductsComponentsViewModel(products: Products){
+    private fun setProductsComponentsFactory(products: Products){
         products.products.forEach {
-            componentsViewModel.add(ProductViewModel(it))
+            componentsFactory.add(ProductFactory(it))
         }
 
         uiState.value = GetProductsState.GetProductsSuccess

@@ -5,9 +5,9 @@ import com.example.domain.model.Product
 import com.example.ui.components.ComponentListener
 import com.example.ui.components.ProductView
 
-class ProductViewModel(val product: Product): ComponentViewModel {
+class ProductFactory(val product: Product): ComponentFactory {
     @Composable
-    override fun Build(componentListener: ComponentListener) {
+    override fun Create(componentListener: ComponentListener) {
         ProductView(
             product = product,
             componentListener)

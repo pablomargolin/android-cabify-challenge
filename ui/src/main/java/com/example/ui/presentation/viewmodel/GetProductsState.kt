@@ -1,4 +1,4 @@
-package com.example.cabifychallenge.presentation.viewmodel
+package com.example.ui.presentation.viewmodel
 
 sealed class GetProductsState {
     object GetProductsSuccess: GetProductsState()
