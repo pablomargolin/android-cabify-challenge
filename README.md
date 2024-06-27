@@ -35,4 +35,7 @@ Para leer la documentación técnica completa:
 
 Si hay un problema con el enlace, se puede descargar de aca:
 
-[Documentación Técnica - Cabify Mobile Challenge (DOCX)](./Cabify%20Challenge%20Documentation.pdf)
+[Documentación Técnica - Cabify Mobile Challenge (PDF)](./Cabify%20Challenge%20Documentation.pdf)
+
+Para descargar la APK podes hacerlo desde este drive
+[Cabify Challenge](https://drive.google.com/file/d/1oMzlK3-Lj_Di2LTfDbiVgHLMrc5Bscn5/view?usp=sharing)
