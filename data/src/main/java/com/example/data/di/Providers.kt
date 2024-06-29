@@ -17,6 +17,5 @@ abstract class BindsModule {
     abstract fun provideGetProductDataSource(getProductsDataSource: ProductRemoteDataSource): ProductsDataSource
 
     @Binds
-    @Singleton
     abstract fun provideCartRepository(cartRepositoryImpl: CartRepositoryImpl): CartRepository
 }
